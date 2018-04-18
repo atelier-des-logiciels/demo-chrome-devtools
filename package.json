@@ -2,6 +2,14 @@
   "name": "demo-chrome-devtools",
   "version": "1.0.0",
   "description": "A demo showing chrome headless devtools abilities",
+  "private": true,
+  "author": "Guillaume ARM <trapcodien@gmail.com> (https://github.com/guillaumearm/)",
+  "license": "MIT",
+  "keywords": [
+    "demo",
+    "chrome",
+    "devtools"
+  ],
   "scripts": {
     "dev": "NODE_ENV=development webpack-dev-server --host 0.0.0.0",
     "build": "NODE_ENV=production webpack",
@@ -11,13 +19,17 @@
     "test:all": "npm run -s lint && npm run -s test",
     "clean": "rimraf ./dist"
   },
-  "keywords": [
-    "demo",
-    "chrome",
-    "devtools"
-  ],
-  "author": "Guillaume ARM <trapcodien@gmail.com> (https://github.com/guillaumearm/)",
-  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atelier-des-logiciels/demo-chrome-devtools.git"
+  },
+  "bugs": {
+    "url": "https://github.com/atelier-des-logiciels/demo-chrome-devtools/issues"
+  },
+  "homepage": "https://github.com/atelier-des-logiciels/demo-chrome-devtools#readme",
+  "engines": {
+    "node": ">=6.0.0"
+  },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.44",
     "@babel/core": "^7.0.0-beta.44",
