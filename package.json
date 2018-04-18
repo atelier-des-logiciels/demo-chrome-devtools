@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "A demo showing chrome headless devtools abilities",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo no tests specified",
+    "lint": "eslint .",
+    "test:all": "npm run -s lint && npm run -s test"
   },
   "keywords": [
     "demo",
@@ -15,7 +17,11 @@
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.44",
     "@babel/core": "^7.0.0-beta.44",
-    "@babel/preset-env": "^7.0.0-beta.44"
+    "@babel/preset-env": "^7.0.0-beta.44",
+    "babel-eslint": "^8.2.3",
+    "eslint": "^4.19.1",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-react": "^7.7.0"
   },
   "dependencies": {}
 }
