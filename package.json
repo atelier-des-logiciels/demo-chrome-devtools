@@ -1,0 +1,15 @@
+{
+  "name": "demo-chrome-devtools",
+  "version": "1.0.0",
+  "description": "A demo showing chrome headless devtools abilities",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "demo",
+    "chrome",
+    "devtools"
+  ],
+  "author": "Guillaume ARM <trapcodien@gmail.com> (https://github.com/guillaumearm/)",
+  "license": "MIT"
+}
