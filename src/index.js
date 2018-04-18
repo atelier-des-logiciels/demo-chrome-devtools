@@ -3,4 +3,11 @@ import React from 'react'
 import App from './App';
 import render from './render';
 
-render(<App />);
+import { withIds } from './utils';
+import initialTodolist from './initialTodolist.json';
+
+render(
+  <App
+    initialTodolist={withIds(initialTodolist)}
+  />
+);

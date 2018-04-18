@@ -1,5 +1,8 @@
 import React from 'react'
-import { Typography, Paper } from 'material-ui';
+import PropTypes from 'prop-types';
+
+import Title from './Title'
+import TodoApp from './TodoApp';
 
 const styles = {
   root: {
@@ -8,24 +11,24 @@ const styles = {
     maxWidth: '800px',
     textAlign: 'center',
   },
-  paper: {
-    padding: 10,
-  },
 };
 
 class App extends React.Component {
   render() {
+    const { initialTodolist } = this.props;
     return (
       <div style={styles.root}>
-        <Typography variant="display2" gutterBottom>
-          TodoApp
-        </Typography>
-        <Paper style={styles.paper}>
-          Hello World
-        </Paper>
+        <Title>TodoApp Demo</Title>
+        <TodoApp initialTodolist={initialTodolist} />
       </div>
     )
   }
+}
+App.propTypes = {
+  initialTodolist: PropTypes.arrayOf(PropTypes.shape({})),
+}
+App.defaultProps = {
+  initialTodolist: [],
 }
 
 export default App
