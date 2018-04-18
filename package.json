@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "dev": "NODE_ENV=development webpack-dev-server --host 0.0.0.0",
-    "build": "NODE_ENV=production webpack",
+    "build": "NODE_ENV=production webpack --progress",
     "start": "(cd dist && serve -p 3000 --clipless)",
     "test": "echo no tests specified",
     "lint": "eslint .",
