@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Divider } from 'material-ui';
 import List from 'material-ui/List'
 
-import Todo from './Todo';
+import Todo from '../Todo';
 
 const TodolistPropTypes = PropTypes.arrayOf(PropTypes.shape(Todo.propTypes));
 
@@ -13,10 +13,10 @@ class TodoList extends React.Component {
     data: TodolistPropTypes.isRequired,
   }
 
-  renderTodo({ id, content, done }) {
+  renderTodo({ id, content, editing, done }) {
     return (
       <React.Fragment key={id}>
-        <Todo id={id} content={content} done={done} />
+        <Todo id={id} content={content} editing={editing} done={done} />
         <Divider />
       </React.Fragment>
     );

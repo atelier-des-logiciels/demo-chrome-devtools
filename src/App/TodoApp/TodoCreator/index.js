@@ -8,21 +8,12 @@ import { ListItem } from 'material-ui/List';
 import { FormControl } from 'material-ui/Form';
 
 const TodoCreator = (props) => {
-  const { onChange, onCreate, onCancel, content } = props;
+  const { onChange, onCreate, content } = props;
   const startAdornment = (
     <InputAdornment position="start">
       <Icon>keyboard_arrow_right</Icon>
     </InputAdornment>
   );
-  const endAdornment = content ? (
-    <InputAdornment position="start">
-      <IconButton
-        onClick={() => onCancel()}
-      >
-        <Icon>cancel</Icon>
-      </IconButton>
-    </InputAdornment>
-  ) : null;
   return (
     <ListItem>
       <FormControl
@@ -39,7 +30,6 @@ const TodoCreator = (props) => {
           label="Add a todo"
           InputProps={{
             startAdornment,
-            endAdornment,
           }}
         />
       </FormControl>
@@ -57,13 +47,11 @@ const TodoCreator = (props) => {
 TodoCreator.propTypes = {
   content: PropTypes.string,
   onCreate: PropTypes.func,
-  onCancel: PropTypes.func,
   onChange: PropTypes.func,
 }
 TodoCreator.defaultProps = {
   content: '',
   onCreate: noop,
-  onCancel: noop,
   onChange: noop,
 }
 

@@ -46,24 +46,39 @@ class Todo extends React.Component {
     );
   }
 
+  onDone = () => {
+    const { id, onDone } = this.props
+    onDone(id);
+  }
+
+  onRemove = () => {
+    const { id, onRemove } = this.props
+    onRemove(id);
+  }
+
+  onEdit = () => {
+    const { id, onEdit } = this.props
+    onEdit(id);
+  }
+
   render() {
-    const { id, done, editing, onDone, onEdit, onRemove } = this.props;
+    const { done, editing } = this.props;
     return (
       <ListItem>
-        <Checkbox onClick={() => onDone(id)} checked={done} />
+        <Checkbox onClick={this.onDone} checked={done} />
         {this.renderContent()}
         <IconButton
           disabled={editing}
           color="primary"
           component="span"
-          onClick={() => onEdit(id)}
+          onClick={this.onEdit}
         >
           <Icon>edit_icon</Icon>
         </IconButton>
         <IconButton
           color="secondary"
           component="span"
-          onClick={() => onRemove(id)}
+          onClick={this.onRemove}
         >
           <DeleteIcon />
         </IconButton>

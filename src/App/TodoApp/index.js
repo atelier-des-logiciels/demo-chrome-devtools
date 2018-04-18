@@ -6,6 +6,8 @@ import { withStyles } from 'material-ui/styles';
 import TodoCreator from './TodoCreator';
 import TodoList from './TodoList';
 
+const setTodolist = assoc('todolist');
+
 const styles = theme => ({
   root: {
     padding: 10,
@@ -29,15 +31,11 @@ class TodoApp extends React.Component {
   }
 
   componentWillMount() {
-    this.setTodolist(this.props.initialTodolist);
+    this.setState(setTodolist(this.props.initialTodolist));
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setTodolist(nextProps.initialTodolist);
-  }
-
-  setTodolist(todolist) {
-    this.setState(assoc('todolist', todolist));
+    this.setState(setTodolist(nextProps.initialTodolist));
   }
 
   render() {
