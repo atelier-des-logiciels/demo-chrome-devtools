@@ -11,5 +11,11 @@
     "devtools"
   ],
   "author": "Guillaume ARM <trapcodien@gmail.com> (https://github.com/guillaumearm/)",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.44",
+    "@babel/core": "^7.0.0-beta.44",
+    "@babel/preset-env": "^7.0.0-beta.44"
+  },
+  "dependencies": {}
 }
