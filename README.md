@@ -34,3 +34,8 @@ To use `webpack-dev-server` :
 ```bash
 npm run dev
 ```
+
+### Resources
+- [Monitoring unused CSS](http://blog.cowchimp.com/monitoring-unused-css-by-unleashing-the-devtools-protocol/)
+
+- [Puppeteer API](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md)
