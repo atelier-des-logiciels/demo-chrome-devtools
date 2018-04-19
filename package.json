@@ -1,6 +1,6 @@
 {
   "name": "demo-chrome-devtools",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A demo showing chrome headless devtools abilities",
   "private": true,
   "author": "Guillaume ARM <trapcodien@gmail.com> (https://github.com/guillaumearm/)",
