@@ -9,10 +9,10 @@ import DeleteIcon from '@material-ui/icons/Delete';
 class Todo extends React.Component {
   static propTypes = {
     id: PropTypes.number.isRequired,
-    content: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
     done: PropTypes.bool,
     editing: PropTypes.bool,
-    onDone: PropTypes.func,
+    onCheckboxClick: PropTypes.func,
     onEdit: PropTypes.func,
     onRemove: PropTypes.func,
   }
@@ -20,21 +20,21 @@ class Todo extends React.Component {
   static defaultProps = {
     done: false,
     editing: false,
-    onDone: noop,
+    onCheckboxClick: noop,
     onEdit: noop,
     onRemove: noop,
   }
 
-  renderContent() {
-    const { editing, content } = this.props;
+  renderValue() {
+    const { editing, value } = this.props;
     if (!editing) {
       return (
-        <ListItemText>{content}</ListItemText>
+        <ListItemText>{value}</ListItemText>
       );
     }
     return (
       <TextField fullWidth
-        value={content}
+        value={value}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
@@ -46,9 +46,9 @@ class Todo extends React.Component {
     );
   }
 
-  onDone = () => {
-    const { id, onDone } = this.props
-    onDone(id);
+  onCheckboxClick = () => {
+    const { id, onCheckboxClick } = this.props
+    onCheckboxClick(id);
   }
 
   onRemove = () => {
@@ -66,7 +66,7 @@ class Todo extends React.Component {
     return (
       <ListItem>
         <Checkbox onClick={this.onDone} checked={done} />
-        {this.renderContent()}
+        {this.renderValue()}
         <IconButton
           disabled={editing}
           color="primary"

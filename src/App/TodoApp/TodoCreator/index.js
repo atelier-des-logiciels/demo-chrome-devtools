@@ -8,7 +8,7 @@ import { ListItem } from 'material-ui/List';
 import { FormControl } from 'material-ui/Form';
 
 const TodoCreator = (props) => {
-  const { onChange, onCreate, content } = props;
+  const { onChange, onCreate, value } = props;
   const startAdornment = (
     <InputAdornment position="start">
       <Icon>keyboard_arrow_right</Icon>
@@ -26,7 +26,7 @@ const TodoCreator = (props) => {
       >
         <TextField fullWidth
           onChange={(e) => onChange(e.target.value)}
-          value={content}
+          value={value}
           label="Add a todo"
           InputProps={{
             startAdornment,
@@ -35,7 +35,7 @@ const TodoCreator = (props) => {
       </FormControl>
       <IconButton
         onClick={() => onCreate()}
-        disabled={!content}
+        disabled={!value}
         color="primary"
         component="span"
       >
@@ -45,12 +45,12 @@ const TodoCreator = (props) => {
   );
 }
 TodoCreator.propTypes = {
-  content: PropTypes.string,
+  value: PropTypes.string,
   onCreate: PropTypes.func,
   onChange: PropTypes.func,
 }
 TodoCreator.defaultProps = {
-  content: '',
+  value: '',
   onCreate: noop,
   onChange: noop,
 }
