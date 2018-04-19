@@ -27,6 +27,15 @@ class Todo extends React.Component {
     onChange: noop,
   }
 
+  shouldComponentUpdate(nextProps) {
+    return (
+      nextProps.done !== this.props.done
+      || nextProps.editing !== this.props.editing
+      || nextProps.id !== this.props.id
+      || nextProps.value !== this.props.value
+    );
+  }
+
   focusTextField = () => {
     setTimeout(() => {
       if (this.textfield && typeof this.textfield.focus === 'function') {

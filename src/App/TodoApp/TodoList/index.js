@@ -13,6 +13,12 @@ class TodoList extends React.Component {
     data: TodolistPropTypes.isRequired,
   }
 
+  shouldComponentUpdate(nextProps) {
+    return (
+      this.props.data !== nextProps.data
+    );
+  }
+
   renderTodo = ({ id, value, editing, done }) => {
     // eslint-disable-next-line no-unused-vars
     const { data, ...restProps } = this.props;
