@@ -8,7 +8,7 @@ const Title = ({ children }) => (
   </Typography>
 )
 Title.propTypes = {
-  children: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
 }
 Title.defaultProps = {
   children: 'TodoApp',
