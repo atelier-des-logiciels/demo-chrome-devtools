@@ -5,6 +5,7 @@ import { TextField, Icon, IconButton, Checkbox } from 'material-ui';
 import { ListItem, ListItemText } from 'material-ui/List'
 import { InputAdornment } from 'material-ui/Input';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { FormControl } from 'material-ui/Form';
 
 class Todo extends React.Component {
   static propTypes = {
@@ -13,37 +14,36 @@ class Todo extends React.Component {
     done: PropTypes.bool,
     editing: PropTypes.bool,
     onCheckboxClick: PropTypes.func,
-    onEdit: PropTypes.func,
+    onToggleEdit: PropTypes.func,
     onRemove: PropTypes.func,
+    onChange: PropTypes.func,
   }
 
   static defaultProps = {
     done: false,
     editing: false,
     onCheckboxClick: noop,
-    onEdit: noop,
+    onToggleEdit: noop,
     onRemove: noop,
+    onChange: noop,
   }
 
-  renderValue() {
-    const { editing, value } = this.props;
-    if (!editing) {
-      return (
-        <ListItemText>{value}</ListItemText>
-      );
-    }
-    return (
-      <TextField fullWidth
-        value={value}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <Icon>keyboard_arrow_right</Icon>
-            </InputAdornment>
-          ),
-        }}
-      />
-    );
+  focusTextField = () => {
+    setTimeout(() => {
+      if (this.textfield && typeof this.textfield.focus === 'function') {
+        this.textfield.focus();
+      }
+    });
+  }
+
+  trimValue = () => {
+    const { onChange, value } = this.props;
+    onChange({ id: this.props.id, value: value.trim() });
+  }
+
+  onChange = (e) => {
+    const { onChange } = this.props;
+    onChange({ id: this.props.id, value: e.target.value })
   }
 
   onCheckboxClick = () => {
@@ -56,32 +56,92 @@ class Todo extends React.Component {
     onRemove(id);
   }
 
-  onEdit = () => {
-    const { id, onEdit } = this.props
-    onEdit(id);
+  onToggleEdit = (editing) => {
+    const { id, onToggleEdit } = this.props
+    onToggleEdit({ id, editing });
+    if (editing) {
+      this.focusTextField();
+    } else {
+      this.trimValue();
+    }
+
   }
 
+  renderValue = () => {
+    const { editing, value } = this.props;
+    if (!editing) {
+      return (
+        <ListItemText>{value}</ListItemText>
+      );
+    }
+    return (
+      <FormControl
+        component="form"
+        fullWidth
+        onSubmit={(e) => {
+          e.preventDefault();
+          this.onToggleEdit(false);
+        }}
+      >
+        <TextField fullWidth
+          style={{ paddingLeft: '16px', width: '95%' }}
+          inputRef={node => { this.textfield = node; }}
+          onChange={this.onChange}
+          value={value}
+        />
+      </FormControl>
+    );
+  }
+
+  renderEditIcon = () => {
+    if (this.props.editing) {
+      return (
+        <IconButton
+          disableRipple
+          style={{ color: 'green' }}
+          component="span"
+          onClick={() => this.onToggleEdit(false)}
+        >
+          <Icon>done</Icon>
+        </IconButton>
+      );
+    }
+    return (
+      <IconButton
+        disableRipple
+        color="primary"
+        component="span"
+        onClick={() => this.onToggleEdit(true)}
+      >
+        <Icon>edit_icon</Icon>
+      </IconButton>
+    );
+  }
+
+  renderRemoveIcon = () => {
+    return (
+      <IconButton
+        disableRipple
+        color="secondary"
+        component="span"
+        onClick={this.onRemove}
+      >
+        <DeleteIcon />
+      </IconButton>
+    );
+  }
+
+
   render() {
-    const { done, editing } = this.props;
     return (
       <ListItem>
-        <Checkbox onClick={this.onDone} checked={done} />
+        <Checkbox
+          onClick={this.onCheckboxClick}
+          checked={this.props.done}
+        />
         {this.renderValue()}
-        <IconButton
-          disabled={editing}
-          color="primary"
-          component="span"
-          onClick={this.onEdit}
-        >
-          <Icon>edit_icon</Icon>
-        </IconButton>
-        <IconButton
-          color="secondary"
-          component="span"
-          onClick={this.onRemove}
-        >
-          <DeleteIcon />
-        </IconButton>
+        {this.renderEditIcon()}
+        {this.renderRemoveIcon()}
       </ListItem>
     );
   }

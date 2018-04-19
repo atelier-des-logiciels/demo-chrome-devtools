@@ -1,5 +1,5 @@
 [
-  { "id": 0, "value": "Hello World", "done": true },
+  { "value": "Hello World", "done": true },
   { "value": "OK" },
   { "value": "Yeaaaahhhh hasdiuhaiusdh iuahsdiu hasdiu hasuid" },
   { "value": "This is my first todo", "done": true }

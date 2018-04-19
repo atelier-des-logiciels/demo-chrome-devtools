@@ -1,6 +1,6 @@
 {
   "name": "demo-chrome-devtools",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A demo showing chrome headless devtools abilities",
   "private": true,
   "author": "Guillaume ARM <trapcodien@gmail.com> (https://github.com/guillaumearm/)",
@@ -35,6 +35,7 @@
     "@babel/core": "^7.0.0-beta.44",
     "@babel/plugin-proposal-class-properties": "^7.0.0-beta.44",
     "@babel/plugin-proposal-decorators": "^7.0.0-beta.44",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.44",
     "@babel/preset-env": "^7.0.0-beta.44",
     "@babel/preset-react": "^7.0.0-beta.44",
     "babel-eslint": "^8.2.3",

@@ -13,10 +13,18 @@ class TodoList extends React.Component {
     data: TodolistPropTypes.isRequired,
   }
 
-  renderTodo({ id, value, editing, done }) {
+  renderTodo = ({ id, value, editing, done }) => {
+    // eslint-disable-next-line no-unused-vars
+    const { data, ...restProps } = this.props;
     return (
       <React.Fragment key={id}>
-        <Todo id={id} value={value} editing={editing} done={done} />
+        <Todo
+          {...restProps}
+          id={id}
+          value={value}
+          editing={editing}
+          done={done}
+        />
         <Divider />
       </React.Fragment>
     );
