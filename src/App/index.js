@@ -1,34 +1,43 @@
 import React from 'react'
 import PropTypes from 'prop-types';
+import { Paper } from 'material-ui';
+import { withStyles } from 'material-ui/styles';
 
 import Title from './Title'
 import TodoApp from './TodoApp';
 
-const styles = {
+const styles = theme => ({
   root: {
     paddingTop: 10,
     margin: 'auto',
     maxWidth: '800px',
     textAlign: 'center',
   },
-};
+  paper: {
+    padding: 10,
+    backgroundColor: theme.palette.background.paper,
+  },
+});
 
 class App extends React.Component {
   render() {
-    const { initialTodolist } = this.props;
+    const { classes, initialTodolist } = this.props;
     return (
-      <div style={styles.root}>
+      <div className={classes.root}>
         <Title>TodoApp Demo</Title>
-        <TodoApp initialTodolist={initialTodolist} />
+        <Paper className={classes.paper}>
+          <TodoApp initialTodolist={initialTodolist} />
+        </Paper>
       </div>
     )
   }
 }
 App.propTypes = {
+  classes: PropTypes.object.isRequired,
   initialTodolist: PropTypes.arrayOf(PropTypes.shape({})),
 }
 App.defaultProps = {
   initialTodolist: [],
 }
 
-export default App
+export default withStyles(styles)(App)
