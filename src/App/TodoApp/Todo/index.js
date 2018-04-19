@@ -3,7 +3,6 @@ import { noop } from 'ramda-adjunct';
 import PropTypes from 'prop-types';
 import { TextField, Icon, IconButton, Checkbox } from 'material-ui';
 import { ListItem, ListItemText } from 'material-ui/List'
-import { InputAdornment } from 'material-ui/Input';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { FormControl } from 'material-ui/Form';
 

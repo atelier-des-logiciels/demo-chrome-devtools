@@ -26,12 +26,8 @@ class TodoApp extends React.Component {
     this.setState(updater(msg, payload));
   });
 
-  componentWillMount() {
-    this.update('SET_TODOLIST', this.props.initialTodolist);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.update('SET_TODOLIST', nextProps.initialTodolist);
+  static getDerivedStateFromProps(nextProps, prevState) {
+    return updater('SET_TODOLIST', nextProps.initialTodolist)(prevState);
   }
 
   render() {
