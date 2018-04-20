@@ -8,23 +8,27 @@ const puppeteer = require('puppeteer');
 
 
 /* ************************************************************************* */
-const log = (...args) => {
-  // eslint-disable-next-line no-console
-  console.log('=>', ...args);
+const log = async (arg, p) => {
+  process.stdout.write(`=> ${arg} `);
+  const result = await p;
+  process.stdout.write('[OK]\n')
+  return result;
 };
 
 const error = (err) => {
   // eslint-disable-next-line no-console
   console.error(err);
   process.exit(1);
-}
+};
 
 const build = (config) => webpack(config.WEBPACK_CONFIG);
 const clean = (config) => rimraf(config.TMP_FOLDER);
+
 const startServer = async (config) => {
   await mkdirp(config.TMP_FOLDER);
   return serve(path.join(config.TMP_FOLDER), config.SERVER_OPTIONS)
 };
+
 const startBrowser = (config) => puppeteer.launch(config.PUPPETEER_OPTIONS);
 
 const runTests = async ({ tests, config, browser, page }) => {
@@ -38,42 +42,28 @@ const runTests = async ({ tests, config, browser, page }) => {
 
 
 const main = async (config, server, tests) => {
+  await log('build', build(config));
 
-  await build(config);
-  log('build [OK]');
+  const browser = await log('start browser', startBrowser(config));
+  const page = await log('open a new page', browser.newPage());
+  await log('run tests', runTests({ tests, config, browser, page }));
 
-  const browser = await startBrowser(config);
-  log('start browser [OK]');
-
-  const page = await browser.newPage();
-  log('open a new page [OK]');
-
-  await runTests({ tests, config, browser, page });
-  log('run tests [OK]');
-
-  await page.close();
-  log('close page [OK]');
-
-  await browser.close();
-  log('close browser [OK]');
-
-  await clean(config);
-  log('clean [OK]');
-
-  server.stop();
-  log('stop server [OK]');
+  await log('close page', page.close());
+  await log('close browser', browser.close());
+  await log('clean', clean(config));
+  await log('stop server', server.stop());
 }
 
 /* ************************************************************************* */
 
 
 (async () => {
-  const config = require('./configuration');
-  const server = await startServer(config);
   const tests = require('./tests');
+  const config = require('./configuration');
 
-  log('start server [OK]');
-  main(config, server, tests).catch(e => {
+  const server = await log('start server', startServer(config));
+
+  await main(config, server, tests).catch(e => {
     server.stop();
     error(e);
   });
