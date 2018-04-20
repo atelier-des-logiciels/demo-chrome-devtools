@@ -32,6 +32,9 @@ module.exports = {
     optimization: {
       minimize: isProduction,
     },
+    performance: {
+      hints: false
+    },
     entry: [
       './index.js',
     ],
