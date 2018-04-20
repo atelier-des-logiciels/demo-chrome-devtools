@@ -40,6 +40,21 @@ There are 2 importants render optimization using `shouldComponentUpdate`
 - in [TodoList component](https://github.com/atelier-des-logiciels/demo-chrome-devtools/blob/master/src/App/TodoApp/TodoList/index.js#L16)
 - in [Todo component](https://github.com/atelier-des-logiciels/demo-chrome-devtools/blob/master/src/App/TodoApp/Todo/index.js#L30)
 
+## End-to-end tests
+e2e tests are done using [puppeteer](https://github.com/GoogleChrome/puppeteer).
+
+Run e2e tests :
+```bash
+$ npm run test:e2e
+# or
+$ node ./e2e
+```
+
+If you use `--delay` argument, [headless mode will be disabled](https://github.com/GoogleChrome/puppeteer#debugging-tips) and a full version of Chromium will be ran, this is a good way to show what's going on.
+```bash
+$ node e2e --delay 500
+```
+
 ## Resources
 - [Monitoring unused CSS](http://blog.cowchimp.com/monitoring-unused-css-by-unleashing-the-devtools-protocol/)
 
