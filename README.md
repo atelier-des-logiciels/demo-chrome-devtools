@@ -40,7 +40,7 @@ There are 2 importants render optimization using `shouldComponentUpdate`
 - in [TodoList component](https://github.com/atelier-des-logiciels/demo-chrome-devtools/blob/master/src/App/TodoApp/TodoList/index.js#L16)
 - in [Todo component](https://github.com/atelier-des-logiciels/demo-chrome-devtools/blob/master/src/App/TodoApp/Todo/index.js#L30)
 
-### Resources
+## Resources
 - [Monitoring unused CSS](http://blog.cowchimp.com/monitoring-unused-css-by-unleashing-the-devtools-protocol/)
 
 - [Puppeteer API](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md)
