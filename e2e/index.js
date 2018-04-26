@@ -57,7 +57,14 @@ const startBrowser = (config) => puppeteer.launch(config.PUPPETEER_OPTIONS);
 const runTests = async ({ tests, config, browser, page }) => {
   await page.goto(`${config.HOST}:${config.PORT}`)
   for (const test of tests) {
-    await test({ config, browser, page, log: log.withIndent() });
+    const runningTest = test.run({ config, browser, page })
+    try {
+      await log.withIndent()(test.file, runningTest);
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error(`\n${e}`);
+      process.exitCode = 1;
+    }
   }
 }
 
@@ -71,14 +78,9 @@ const main = async (config, server, tests) => {
 
   const browser = await log('start browser', startBrowser(config));
   const page = await log('open a new page', browser.newPage());
-  try {
-    // eslint-disable-next-line no-console
-    await log('run tests...', runTests({ tests, config, browser, page }))
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.error(e);
-    process.exitCode = 1;
-  }
+  // eslint-disable-next-line no-console
+  console.log('=> run tests...');
+  await runTests({ tests, config, browser, page });
 
   await log('close page', page.close());
   await log('close browser', browser.close());
