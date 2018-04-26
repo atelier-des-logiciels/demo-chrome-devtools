@@ -4,7 +4,7 @@ const webpack = promisify(require('webpack'));
 const rimraf = promisify(require('rimraf'));
 const puppeteer = require('puppeteer');
 
-const log = require('./log');
+const { calculateCoverage, log } = require('./utils');
 const serve = require('../server');
 
 
@@ -35,6 +35,7 @@ const startServer = (config) => (
 const startBrowser = (config) => puppeteer.launch(config.PUPPETEER_OPTIONS);
 
 const runTests = async ({ tests, config, browser, page }) => {
+  await page.coverage.startJSCoverage();
   await page.goto(`${config.HOST}:${config.PORT}`)
   for (const test of tests) {
     const runningTest = test.run({ config, browser, page })
@@ -46,6 +47,8 @@ const runTests = async ({ tests, config, browser, page }) => {
       process.exitCode = 1;
     }
   }
+  const jsCoverage = await page.coverage.stopJSCoverage();
+  return { jsCoverage }
 }
 
 /* ************************************************************************* */
@@ -60,7 +63,7 @@ const main = async (config, server, tests) => {
   const page = await log('open a new page', browser.newPage());
   // eslint-disable-next-line no-console
   console.log('=> run tests...');
-  await runTests({ tests, config, browser, page });
+  const { jsCoverage } = await runTests({ tests, config, browser, page });
 
   await log('close page', page.close());
   await log('close browser', browser.close());
@@ -68,25 +71,15 @@ const main = async (config, server, tests) => {
     await log('clean', clean(config));
   }
   await log('stop server', server.close());
+
+  // eslint-disable-next-line no-console
+  console.log(`\nJS bundle ${calculateCoverage(jsCoverage)}% covered`);
 }
 
 /* ************************************************************************* */
 
 
 (async () => {
-//   const [jsCoverage, cssCoverage] = await Promise.all([
-//   page.coverage.stopJSCoverage(),
-//   page.coverage.stopCSSCoverage(),
-// ]);
-// let totalBytes = 0;
-// let usedBytes = 0;
-// const coverage = [...jsCoverage, ...cssCoverage];
-// for (const entry of coverage) {
-//   totalBytes += entry.text.length;
-//   for (const range of entry.ranges)
-//     usedBytes += range.end - range.start - 1;
-// }
-// console.log(`Bytes used: ${usedBytes / totalBytes * 100}%`);
   const tests = require('./tests');
   const config = require('./configuration');
 

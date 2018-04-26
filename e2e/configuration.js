@@ -15,6 +15,8 @@ const argv = require('yargs')
   .default('build', true)
   .argv;
 
+process.env.NODE_ENV='production';
+
 const webpackConfig = require('../webpack.config');
 
 const tmpFolder = path.resolve(__dirname, 'tmp');
