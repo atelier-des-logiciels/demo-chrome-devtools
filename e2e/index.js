@@ -1,3 +1,4 @@
+const { repeat } = require('ramda');
 const path = require('path');
 const { promisify } = require('util');
 const mkdirp = require('mkdirp-promise');
@@ -8,14 +9,28 @@ const puppeteer = require('puppeteer');
 
 
 /* ************************************************************************* */
-const log = async (arg, p) => {
-  process.stdout.write(`=> ${arg} `);
-  const result = await p;
-  process.stdout.write('[OK]\n')
-  return result;
+
+const createLog = (nIndent = 0) => {
+  const log = async (arg, f) => {
+    const indent = repeat(' ', nIndent).join('');
+    process.stdout.write(`${indent}=> ${arg} `);
+    let promise = f;
+    if (typeof f === 'function') {
+      promise = f();
+    }
+    const result = await promise;
+    process.stdout.write('[OK]\n');
+    return result;
+  };
+
+  log.withIndent = (n = 2) => createLog(nIndent + n);
+
+  return log;
 };
 
-const error = (err) => {
+const log = createLog();
+
+const exitError = (err) => {
   // eslint-disable-next-line no-console
   console.error(err);
   process.exit(1);
@@ -34,7 +49,7 @@ const startBrowser = (config) => puppeteer.launch(config.PUPPETEER_OPTIONS);
 const runTests = async ({ tests, config, browser, page }) => {
   await page.goto(`${config.HOST}:${config.SERVER_OPTIONS.port}`)
   for (const test of tests) {
-    await test({ config, browser, page });
+    await test({ config, browser, page, log: log.withIndent() });
   }
 }
 
@@ -46,7 +61,14 @@ const main = async (config, server, tests) => {
 
   const browser = await log('start browser', startBrowser(config));
   const page = await log('open a new page', browser.newPage());
-  await log('run tests', runTests({ tests, config, browser, page }));
+  try {
+    // eslint-disable-next-line no-console
+    console.log('=> run tests...');
+    await runTests({ tests, config, browser, page })
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error(e);
+  }
 
   await log('close page', page.close());
   await log('close browser', browser.close());
@@ -65,6 +87,6 @@ const main = async (config, server, tests) => {
 
   await main(config, server, tests).catch(e => {
     server.stop();
-    error(e);
+    exitError(e);
   });
 })();
