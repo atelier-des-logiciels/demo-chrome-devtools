@@ -31,17 +31,26 @@ module.exports = {
     mode: process.env.NODE_ENV,
     optimization: {
       minimize: isProduction,
+      splitChunks: {
+        cacheGroups: {
+          commons: {
+              test: /[\\/]node_modules[\\/]/,
+              name: "vendors",
+              chunks: "all"
+          },
+        },
+      },
     },
     performance: {
       hints: false
     },
-    entry: [
-      './index.js',
-    ],
+    entry: {
+      app: './index.js',
+    },
     output: {
        path: distFolder,
        publicPath: '/',
-       filename: 'app.bundle.js',
+       filename: '[name].bundle.js',
     },
     resolve: {
       modules: ['node_modules']
