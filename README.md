@@ -1,6 +1,6 @@
 # demo-chrome-devtools
 
-This app intends to show you how you can use chrome devtools to write efficient This app intends to show you how you can use the chrome developer tools to write efficient integration tests.
+This app intends to show you how you can use chrome devtools to write efficient integration tests.
 
 ------------------------
 
