@@ -4,7 +4,7 @@ const webpack = promisify(require('webpack'));
 const rimraf = promisify(require('rimraf'));
 const puppeteer = require('puppeteer');
 
-const { calculateCoverage, log } = require('./utils');
+const { getCoverageReport, log } = require('./utils');
 const serve = require('../server');
 
 
@@ -78,7 +78,7 @@ const main = async (config, server, tests) => {
   await log('stop server', server.close());
 
   // eslint-disable-next-line no-console
-  console.log(`\nJS bundle ${calculateCoverage(jsCoverage)}% covered`);
+  getCoverageReport(jsCoverage).forEach(x => console.log(x))
 }
 
 /* ************************************************************************* */
