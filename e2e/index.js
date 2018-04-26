@@ -16,9 +16,14 @@ const exitError = (err) => {
   process.exit(1);
 };
 
-const build = (config) => {
+const build = async (config) => {
   if (config.BUILD) {
-    return webpack(config.WEBPACK_CONFIG)
+    const stats = await webpack(config.WEBPACK_CONFIG)
+    const info = stats.toJson();
+    if (info.errors.length) {
+      throw info.errors[0];
+    }
+    return stats;
   }
 };
 
