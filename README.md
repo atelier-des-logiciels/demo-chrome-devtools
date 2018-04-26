@@ -50,10 +50,18 @@ $ npm run test:e2e
 $ node ./e2e
 ```
 
-If you use `--delay` argument, [headless mode will be disabled](https://github.com/GoogleChrome/puppeteer#debugging-tips) and a full version of Chromium will be ran, this is a good way to show what's going on.
+If you use `--delay` option, [headless mode will be disabled](https://github.com/GoogleChrome/puppeteer#debugging-tips) and a full version of Chromium will be ran, this is a good way to show what's going on.
 ```bash
 $ node e2e --delay 500
 ```
+
+**Note**: You can speed-up e2e tests by running `npm run build` before and using `--build=false` option
+```bash
+$ npm run build
+$ node e2e --build=false
+```
+
+For more informations, please run `node e2e --help`
 
 ## Resources
 - [Monitoring unused CSS](http://blog.cowchimp.com/monitoring-unused-css-by-unleashing-the-devtools-protocol/)
