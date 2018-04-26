@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import { Typography } from 'material-ui';
 
 const Title = ({ children }) => (
-  <Typography variant="display2" gutterBottom>
+  <Typography
+    id="app-title"
+    variant="display2"
+    gutterBottom
+  >
     {children}
   </Typography>
 )

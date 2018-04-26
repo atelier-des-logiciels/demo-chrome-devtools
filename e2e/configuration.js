@@ -26,11 +26,7 @@ const configuration = {
     slowMo: argv.delay,
   },
   HOST: 'http://localhost',
-  SERVER_OPTIONS: {
-    port: 4242,
-    clipless: true,
-    silent: true,
-  },
+  PORT: 4242,
   BUILD: argv.build,
   DIST_FOLDER: argv.build ? tmpFolder : distFolder,
   TEST_FOLDER: path.resolve(__dirname, 'tests'),

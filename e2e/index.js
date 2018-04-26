@@ -1,16 +1,14 @@
 const { repeat } = require('ramda');
 const path = require('path');
 const { promisify } = require('util');
-const mkdirp = require('mkdirp-promise');
 const webpack = promisify(require('webpack'));
 const rimraf = promisify(require('rimraf'));
-const serve = require('serve');
 const puppeteer = require('puppeteer');
+
+const serve = require('../server');
 
 
 /* ************************************************************************* */
-
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 const createLog = (nIndent = 0) => {
   const log = async (arg, f) => {
@@ -50,21 +48,14 @@ const clean = (config) => {
   }
 };
 
-const startServer = async (config) => {
-  if (config.BUILD) {
-    await mkdirp(config.DIST_FOLDER);
-  }
-  const server = serve(path.join(config.DIST_FOLDER), config.SERVER_OPTIONS)
-  if (!config.BUILD) {
-    await sleep(500)
-  }
-  return server
-};
+const startServer = (config) => (
+  serve(path.join(config.DIST_FOLDER), config.PORT)
+);
 
 const startBrowser = (config) => puppeteer.launch(config.PUPPETEER_OPTIONS);
 
 const runTests = async ({ tests, config, browser, page }) => {
-  await page.goto(`${config.HOST}:${config.SERVER_OPTIONS.port}`)
+  await page.goto(`${config.HOST}:${config.PORT}`)
   for (const test of tests) {
     await test({ config, browser, page, log: log.withIndent() });
   }
@@ -82,8 +73,7 @@ const main = async (config, server, tests) => {
   const page = await log('open a new page', browser.newPage());
   try {
     // eslint-disable-next-line no-console
-    console.log('=> run tests...');
-    await runTests({ tests, config, browser, page })
+    await log('run tests...', runTests({ tests, config, browser, page }))
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error(e);
@@ -95,7 +85,7 @@ const main = async (config, server, tests) => {
   if (config.BUILD) {
     await log('clean', clean(config));
   }
-  await log('stop server', server.stop());
+  await log('stop server', server.close());
 }
 
 /* ************************************************************************* */
