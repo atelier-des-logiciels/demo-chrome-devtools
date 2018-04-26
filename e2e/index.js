@@ -10,6 +10,8 @@ const puppeteer = require('puppeteer');
 
 /* ************************************************************************* */
 
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 const createLog = (nIndent = 0) => {
   const log = async (arg, f) => {
     const indent = repeat(' ', nIndent).join('');
@@ -36,12 +38,27 @@ const exitError = (err) => {
   process.exit(1);
 };
 
-const build = (config) => webpack(config.WEBPACK_CONFIG);
-const clean = (config) => rimraf(config.TMP_FOLDER);
+const build = (config) => {
+  if (config.BUILD) {
+    return webpack(config.WEBPACK_CONFIG)
+  }
+};
+
+const clean = (config) => {
+  if (config.BUILD) {
+    return rimraf(config.DIST_FOLDER)
+  }
+};
 
 const startServer = async (config) => {
-  await mkdirp(config.TMP_FOLDER);
-  return serve(path.join(config.TMP_FOLDER), config.SERVER_OPTIONS)
+  if (config.BUILD) {
+    await mkdirp(config.DIST_FOLDER);
+  }
+  const server = serve(path.join(config.DIST_FOLDER), config.SERVER_OPTIONS)
+  if (!config.BUILD) {
+    await sleep(500)
+  }
+  return server
 };
 
 const startBrowser = (config) => puppeteer.launch(config.PUPPETEER_OPTIONS);
@@ -57,7 +74,9 @@ const runTests = async ({ tests, config, browser, page }) => {
 
 
 const main = async (config, server, tests) => {
-  await log('build', build(config));
+  if (config.BUILD) {
+    await log('build', build(config));
+  }
 
   const browser = await log('start browser', startBrowser(config));
   const page = await log('open a new page', browser.newPage());
@@ -68,11 +87,14 @@ const main = async (config, server, tests) => {
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error(e);
+    process.exitCode = 1;
   }
 
   await log('close page', page.close());
   await log('close browser', browser.close());
-  await log('clean', clean(config));
+  if (config.BUILD) {
+    await log('clean', clean(config));
+  }
   await log('stop server', server.stop());
 }
 
