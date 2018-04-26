@@ -1,34 +1,14 @@
-const { repeat } = require('ramda');
 const path = require('path');
 const { promisify } = require('util');
 const webpack = promisify(require('webpack'));
 const rimraf = promisify(require('rimraf'));
 const puppeteer = require('puppeteer');
 
+const log = require('./log');
 const serve = require('../server');
 
 
 /* ************************************************************************* */
-
-const createLog = (nIndent = 0) => {
-  const log = async (arg, f) => {
-    const indent = repeat(' ', nIndent).join('');
-    process.stdout.write(`${indent}=> ${arg} `);
-    let promise = f;
-    if (typeof f === 'function') {
-      promise = f();
-    }
-    const result = await promise;
-    process.stdout.write('[OK]\n');
-    return result;
-  };
-
-  log.withIndent = (n = 2) => createLog(nIndent + n);
-
-  return log;
-};
-
-const log = createLog();
 
 const exitError = (err) => {
   // eslint-disable-next-line no-console
