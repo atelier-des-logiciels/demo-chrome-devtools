@@ -30,6 +30,7 @@ class App extends React.Component {
         <Title>
           TodoApp Demo
           <Button
+            id="todolist-reload"
             onClick={() => this.forceUpdate()}
             variant="fab"
             color="primary"
