@@ -43,6 +43,8 @@ There are 2 importants render optimization using `shouldComponentUpdate`
 ## End-to-end tests
 e2e tests are done using [puppeteer](https://github.com/GoogleChrome/puppeteer).
 
+![e2e testing gif](https://media.giphy.com/media/TIycDqd7ElZ0w826aB/giphy.gif)
+
 There are 3 steps for this moment:
   - functional tests (in `./e2e/tests/*`)
   - JS/CSS bundle coverage
