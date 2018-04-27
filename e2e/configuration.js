@@ -7,7 +7,7 @@ const argv = require('yargs')
   .help('h')
   .alias('h', 'help')
   .describe('d', 'Add delay (in ms) between operations and run a full version of Chromium')
-  .default('d', 0)
+  .default('d', false)
   .alias('d', 'delay')
   .nargs('d', 1)
   .boolean('build')
@@ -24,7 +24,7 @@ const distFolder = path.resolve(__dirname, '..', 'dist');
 
 const configuration = {
   PUPPETEER_OPTIONS: {
-    headless: !argv.delay,
+    headless: argv.delay === false,
     slowMo: argv.delay,
   },
   HOST: 'http://localhost',

@@ -47,6 +47,7 @@ class TodoCreator extends React.Component {
           }}
         >
           <TextField fullWidth
+            id="todo-creator-input"
             inputRef={node => { this.textfield = node }}
             onChange={(e) => onChange(e.target.value)}
             value={value}
@@ -57,6 +58,7 @@ class TodoCreator extends React.Component {
           />
         </FormControl>
         <IconButton
+          id="todo-creator-button"
           disableRipple
           onClick={submit}
           disabled={!value}

@@ -63,7 +63,7 @@ const runTests = async ({ tests, config, browser, page }) => {
       await log.withIndent()(test.file, runningTest);
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error(clc.red(`\n${e}`));
+      console.error(clc.red(e));
       process.exitCode = 1;
     }
   }
