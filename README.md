@@ -43,18 +43,25 @@ There are 2 importants render optimization using `shouldComponentUpdate`
 ## End-to-end tests
 e2e tests are done using [puppeteer](https://github.com/GoogleChrome/puppeteer).
 
-Run e2e tests :
+There are 3 steps for this moment:
+  - functional tests (in `./e2e/tests/*`)
+  - JS/CSS bundle coverage
+  - check that there is no `console.warn` or `console.error`
+
+#### Run e2e tests
 ```bash
 $ npm run test:e2e
 # or
 $ node ./e2e
 ```
 
+#### Use --delay
 If you use `--delay` option, [headless mode will be disabled](https://github.com/GoogleChrome/puppeteer#debugging-tips) and a full version of Chromium will be ran, this is a good way to show what's going on.
 ```bash
 $ node e2e --delay 500
 ```
 
+#### Speed-up tests
 **Note**: You can speed-up e2e tests by running `npm run build` before and using `--build=false` option
 ```bash
 $ npm run build
