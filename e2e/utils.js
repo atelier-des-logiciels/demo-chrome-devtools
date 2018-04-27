@@ -25,6 +25,20 @@ const getCoverageReport = pipe(
 )
 
 /* ************************************************************************* */
+const getTodo = page => async todoElement => {
+  const input = await todoElement.$('input');
+  const divChild = await todoElement.$('div > *');
+  const done = await page.evaluate(el => el.checked, input);
+  const value = await page.evaluate(el => el.innerText, divChild);
+  return { done, value };
+}
+const getTodoListFromPage = async page => {
+  const todolist = await page.$$('#todo');
+  return Promise.all(todolist.map(getTodo(page)));
+}
+
+/* ************************************************************************* */
 module.exports = {
   getCoverageReport,
+  getTodoListFromPage,
 };

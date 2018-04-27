@@ -142,7 +142,7 @@ class Todo extends React.Component {
 
   render() {
     return (
-      <ListItem>
+      <ListItem id='todo'>
         <Checkbox
           onClick={this.onCheckboxClick}
           checked={this.props.done}

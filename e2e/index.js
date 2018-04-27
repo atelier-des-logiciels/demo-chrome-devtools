@@ -110,7 +110,7 @@ const main = async (config, server, tests) => {
   }
   await log('stop server', server.close());
 
-  process.stdout.write('\n=> JS and CSS Coverage report\n');
+  process.stdout.write('\n=> JS and CSS bundles coverage report\n');
   getCoverageReport([...jsCoverage, ...cssCoverage]).forEach(x => (
     // eslint-disable-next-line no-console
     console.log(clc.italic.yellow(x))
