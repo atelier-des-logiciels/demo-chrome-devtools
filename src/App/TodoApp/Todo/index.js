@@ -116,6 +116,7 @@ class Todo extends React.Component {
     }
     return (
       <IconButton
+        id="todo-edit"
         disableRipple
         color="primary"
         component="span"
@@ -129,6 +130,7 @@ class Todo extends React.Component {
   renderRemoveIcon = () => {
     return (
       <IconButton
+        id="todo-remove"
         disableRipple
         color="secondary"
         component="span"
