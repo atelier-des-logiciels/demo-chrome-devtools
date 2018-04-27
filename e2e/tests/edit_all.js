@@ -3,10 +3,10 @@ const assert = require('assert').strict;
 const initialTodoList = require('../../src/initialTodoList.json');
 const { getTodoListFromPage } = require('../utils');
 
-const addedText = ' => E2E';
+const addedText = '=> E2E';
 
-const expectedTodolist = initialTodoList.map(({ value, done }) => ({
-  value: value + addedText,
+const expectedTodolist = initialTodoList.map(({ done }) => ({
+  value: addedText,
   done,
 }))
 
@@ -16,6 +16,7 @@ module.exports = async ({ page }) => {
   }
 
   for (const elem of await page.$$('#todo-input')) {
+    await elem.click({ clickCount: 3 })
     await elem.type(addedText);
     await elem.press('Enter');
   }
