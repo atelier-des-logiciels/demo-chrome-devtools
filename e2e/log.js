@@ -1,4 +1,5 @@
 const { repeat } = require('ramda');
+const clc = require('cli-color');
 
 /* ************************************************************************* */
 
@@ -11,7 +12,7 @@ const createLog = (nIndent = 0) => {
       promise = f();
     }
     const result = await promise;
-    process.stdout.write('[OK]\n');
+    process.stdout.write(`${clc.green('[OK]')}\n`);
     return result;
   };
 

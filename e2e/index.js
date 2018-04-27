@@ -1,10 +1,13 @@
+const clc = require('cli-color');
 const path = require('path');
 const { promisify } = require('util');
 const webpack = promisify(require('webpack'));
 const rimraf = promisify(require('rimraf'));
 const puppeteer = require('puppeteer');
 
-const { getCoverageReport, log } = require('./utils');
+const { getCoverageReport } = require('./utils');
+const log = require('./log');
+
 const serve = require('../server');
 
 
@@ -12,7 +15,7 @@ const serve = require('../server');
 
 const exitError = (err) => {
   // eslint-disable-next-line no-console
-  console.error(err);
+  console.error(clc.red(err));
   process.exit(1);
 };
 
@@ -40,11 +43,19 @@ const startServer = (config) => (
 const startBrowser = (config) => puppeteer.launch(config.PUPPETEER_OPTIONS);
 
 const runTests = async ({ tests, config, browser, page }) => {
+  const consoleMessages = [];
+  page.on('console', msg => {
+    if (msg.type() === 'error') {
+      consoleMessages.push({ type: 'error', text: msg.text() });
+    } else if (msg.type() === 'warning') {
+      consoleMessages.push({ type: 'warning', text: msg.text() });
+    }
+  });
+
   await Promise.all([
     page.coverage.startJSCoverage(),
     page.coverage.startCSSCoverage(),
   ])
-  // await page.coverage.startJSCoverage();
   await page.goto(`${config.HOST}:${config.PORT}`)
   for (const test of tests) {
     const runningTest = test.run({ config, browser, page })
@@ -52,7 +63,7 @@ const runTests = async ({ tests, config, browser, page }) => {
       await log.withIndent()(test.file, runningTest);
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error(`\n${e}`);
+      console.error(clc.red(`\n${e}`));
       process.exitCode = 1;
     }
   }
@@ -60,7 +71,21 @@ const runTests = async ({ tests, config, browser, page }) => {
     page.coverage.stopJSCoverage(),
     page.coverage.stopCSSCoverage(),
   ])
-  return { jsCoverage, cssCoverage };
+  return { jsCoverage, cssCoverage, consoleMessages };
+}
+
+const checkConsoleUsage = ({ consoleMessages }) => {
+  consoleMessages.length && process.stdout.write('\n');
+  consoleMessages.forEach(({ type, text }) => {
+    const color = type === 'error' ? 'red' : 'yellow'
+    const paint = clc[color]
+    // eslint-disable-next-line no-console
+    console.log(`${paint.bold(type)}: ${paint(text)}`);
+  });
+  consoleMessages.length && process.stdout.write('\n');
+  if (consoleMessages.length) {
+    throw new Error('There is one or more "console.error" and/or "console.warn"');
+  }
 }
 
 /* ************************************************************************* */
@@ -75,7 +100,8 @@ const main = async (config, server, tests) => {
   const page = await log('open a new page', browser.newPage());
   // eslint-disable-next-line no-console
   console.log('=> run tests...');
-  const { jsCoverage, cssCoverage } = await runTests({ tests, config, browser, page });
+  const testReport = await runTests({ tests, config, browser, page });
+  const { jsCoverage, cssCoverage } = testReport
 
   await log('close page', page.close());
   await log('close browser', browser.close());
@@ -84,9 +110,13 @@ const main = async (config, server, tests) => {
   }
   await log('stop server', server.close());
 
-  process.stdout.write('\n====== JS and CSS Coverage report ======\n');
-  // eslint-disable-next-line no-console
-  getCoverageReport([...jsCoverage, ...cssCoverage]).forEach(x => console.log(x))
+  process.stdout.write('\n=> JS and CSS Coverage report\n');
+  getCoverageReport([...jsCoverage, ...cssCoverage]).forEach(x => (
+    // eslint-disable-next-line no-console
+    console.log(clc.italic.yellow(x))
+  ))
+
+  checkConsoleUsage(testReport);
 }
 
 /* ************************************************************************* */
