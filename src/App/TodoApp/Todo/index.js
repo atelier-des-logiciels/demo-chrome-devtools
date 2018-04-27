@@ -92,6 +92,7 @@ class Todo extends React.Component {
         }}
       >
         <TextField fullWidth
+          id="todo-input"
           style={{ paddingLeft: '16px', width: '95%' }}
           inputRef={node => { this.textfield = node; }}
           onChange={this.onChange}

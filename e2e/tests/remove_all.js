@@ -9,7 +9,7 @@ module.exports = async ({ page }) => {
   }
 
   const todolist = await getTodoListFromPage(page);
-  assert.deepEqual(todolist, [], 'All todos checkbox should be clicked');
+  assert.deepEqual(todolist, [], 'All todos should be removed');
 
   await page.reload();
 };
