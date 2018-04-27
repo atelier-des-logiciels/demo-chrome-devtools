@@ -40,7 +40,11 @@ const startServer = (config) => (
 const startBrowser = (config) => puppeteer.launch(config.PUPPETEER_OPTIONS);
 
 const runTests = async ({ tests, config, browser, page }) => {
-  await page.coverage.startJSCoverage();
+  await Promise.all([
+    page.coverage.startJSCoverage(),
+    page.coverage.startCSSCoverage(),
+  ])
+  // await page.coverage.startJSCoverage();
   await page.goto(`${config.HOST}:${config.PORT}`)
   for (const test of tests) {
     const runningTest = test.run({ config, browser, page })
@@ -52,8 +56,11 @@ const runTests = async ({ tests, config, browser, page }) => {
       process.exitCode = 1;
     }
   }
-  const jsCoverage = await page.coverage.stopJSCoverage();
-  return { jsCoverage }
+  const [ jsCoverage, cssCoverage ] = await Promise.all([
+    page.coverage.stopJSCoverage(),
+    page.coverage.stopCSSCoverage(),
+  ])
+  return { jsCoverage, cssCoverage };
 }
 
 /* ************************************************************************* */
@@ -68,7 +75,7 @@ const main = async (config, server, tests) => {
   const page = await log('open a new page', browser.newPage());
   // eslint-disable-next-line no-console
   console.log('=> run tests...');
-  const { jsCoverage } = await runTests({ tests, config, browser, page });
+  const { jsCoverage, cssCoverage } = await runTests({ tests, config, browser, page });
 
   await log('close page', page.close());
   await log('close browser', browser.close());
@@ -77,8 +84,9 @@ const main = async (config, server, tests) => {
   }
   await log('stop server', server.close());
 
+  process.stdout.write('\n====== JS and CSS Coverage report ======\n');
   // eslint-disable-next-line no-console
-  getCoverageReport(jsCoverage).forEach(x => console.log(x))
+  getCoverageReport([...jsCoverage, ...cssCoverage]).forEach(x => console.log(x))
 }
 
 /* ************************************************************************* */

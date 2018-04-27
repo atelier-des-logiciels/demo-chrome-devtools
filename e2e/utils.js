@@ -40,7 +40,7 @@ const getCoverageReport = pipe(
   calculateCoverage,
   toPairs,
   map(([url, percentage]) => (
-    `${url}:  ${percentage}% covered`
+    `[${percentage}% covered] ${url}`
   )),
 )
 
