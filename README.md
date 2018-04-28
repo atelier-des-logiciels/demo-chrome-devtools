@@ -35,7 +35,15 @@ To use `webpack-dev-server` :
 npm run dev
 ```
 
-### Render optimizations
+### More todos
+You can re-generate `initialTodolist.json` with more todos.
+
+**e.g.**
+```bash
+$ ./generate-todos.js 100 > src/initialTodolist.json
+```
+
+## Render optimizations
 There are 2 importants render optimization using `shouldComponentUpdate`
 - in [TodoList component](https://github.com/atelier-des-logiciels/demo-chrome-devtools/blob/master/src/App/TodoApp/TodoList/index.js#L16)
 - in [Todo component](https://github.com/atelier-des-logiciels/demo-chrome-devtools/blob/master/src/App/TodoApp/Todo/index.js#L30)
