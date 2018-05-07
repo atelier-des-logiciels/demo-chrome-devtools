@@ -22,7 +22,7 @@ const hotModuleReplacementPlugin = new webpack.HotModuleReplacementPlugin();
 
 const namedModulesPluginConfig = new webpack.NamedModulesPlugin();
 
-const distFolder = path.join(__dirname, './dist');
+const distFolder = path.join(__dirname, '../dist/front');
 
 module.exports = {
     devtool: isDevelopment ? 'eval-source-map' : 'source-map',
@@ -58,6 +58,9 @@ module.exports = {
     devServer: {
       historyApiFallback: true,
       hot: true,
+      proxy: {
+        '/api': 'http://localhost:3000'
+      },
     },
     module: {
       rules: [

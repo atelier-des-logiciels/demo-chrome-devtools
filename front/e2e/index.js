@@ -9,7 +9,7 @@ const puppeteer = require('puppeteer');
 const { getCoverageReport } = require('./utils');
 const log = require('./log');
 
-const serve = require('../server');
+const serve = require('../../server/src');
 
 
 /* ************************************************************************* */
@@ -129,6 +129,8 @@ const main = async (config, server, tests) => {
   const config = require('./configuration');
 
   const server = await log('start server', startServer(config));
+
+  // await new Promise((resolve) => setTimeout(() => { resolve()}, 5000));
 
   await main(config, server, tests).catch(e => {
     server.close();

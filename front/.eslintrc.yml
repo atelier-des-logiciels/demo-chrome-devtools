@@ -1,0 +1,25 @@
+parser: "babel-eslint"
+
+parserOptions: 
+ ecmaFeatures: 
+  jsx: true
+
+plugins: 
+ - import
+ - react
+
+extends: 
+ - plugin:react/recommended
+ - plugin:import/errors
+ - plugin:import/warnings
+
+settings:
+ import/resolver:
+  node:
+   extensions:
+    - .js
+    - .jsx
+
+env: 
+ browser: true
+ es6: true
