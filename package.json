@@ -18,7 +18,8 @@
     "test:e2e": "node e2e",
     "test:e2e:watch": "nodemon -i e2e/tmp e2e",
     "lint": "eslint .",
-    "test:all": "npm run lint && npm run test:e2e && npm run test",
+    "test:all": "npm run lint && npm un test:e2e && npm run test",
+    "commit": "git-cz",
     "clean": "rimraf ./dist ./e2e/tmp"
   },
   "repository": {
@@ -43,6 +44,8 @@
     "babel-eslint": "^8.2.3",
     "babel-loader": "^8.0.0-beta.2",
     "cli-color": "^1.2.0",
+    "commitizen": "^2.9.6",
+    "cz-conventional-changelog": "^2.1.0",
     "eslint": "^4.19.1",
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-react": "^7.7.0",
@@ -65,5 +68,10 @@
     "ramda-adjunct": "^2.7.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
