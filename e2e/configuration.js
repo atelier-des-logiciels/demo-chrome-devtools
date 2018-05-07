@@ -26,6 +26,7 @@ const configuration = {
   PUPPETEER_OPTIONS: {
     headless: argv.delay === false,
     slowMo: argv.delay,
+    // executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
   },
   HOST: 'http://localhost',
   PORT: 4242,
