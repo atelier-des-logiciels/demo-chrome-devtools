@@ -18,8 +18,7 @@ const definePluginConfig = new webpack.DefinePlugin({
   'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
 })
 
-
-const hotModuleReplacementPluginConfig = new webpack.HotModuleReplacementPlugin();
+const hotModuleReplacementPlugin = new webpack.HotModuleReplacementPlugin();
 
 const namedModulesPluginConfig = new webpack.NamedModulesPlugin();
 
@@ -75,6 +74,6 @@ module.exports = {
       isProduction ? new webpack.optimize.ModuleConcatenationPlugin() : undefined,
       isDevelopment ? new webpack.NoEmitOnErrorsPlugin() : undefined,
       isDevelopment ? namedModulesPluginConfig : undefined,
-      isDevelopment ? hotModuleReplacementPluginConfig : undefined,
+      isDevelopment ? hotModuleReplacementPlugin : undefined,
     ])
  };
