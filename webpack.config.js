@@ -28,7 +28,7 @@ const distFolder = path.join(__dirname, './dist');
 module.exports = {
     devtool: isDevelopment ? 'eval-source-map' : 'source-map',
     context,
-    mode: process.env.NODE_ENV,
+    mode: isProduction ? 'production' : 'development',
     optimization: {
       minimize: isProduction,
       splitChunks: {
@@ -45,7 +45,7 @@ module.exports = {
       hints: false
     },
     entry: {
-      app: './index.js',
+      app: './index.jsx',
     },
     output: {
        path: distFolder,
@@ -53,6 +53,7 @@ module.exports = {
        filename: '[name].bundle.js',
     },
     resolve: {
+      extensions: ['.js', '.jsx', '.css'],
       modules: ['node_modules']
     },
     devServer: {

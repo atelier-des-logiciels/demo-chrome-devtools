@@ -1,6 +1,7 @@
 const clc = require('cli-color');
 const path = require('path');
 const { promisify } = require('util');
+const pti = require('puppeteer-to-istanbul');
 const webpack = promisify(require('webpack'));
 const rimraf = promisify(require('rimraf'));
 const puppeteer = require('puppeteer');
@@ -71,6 +72,7 @@ const runTests = async ({ tests, config, browser, page }) => {
     page.coverage.stopJSCoverage(),
     page.coverage.stopCSSCoverage(),
   ])
+  pti.write(jsCoverage);
   return { jsCoverage, cssCoverage, consoleMessages };
 }
 
