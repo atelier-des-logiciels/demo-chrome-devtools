@@ -25,7 +25,7 @@ const namedModulesPluginConfig = new webpack.NamedModulesPlugin();
 const distFolder = path.join(__dirname, 'dist');
 
 module.exports = {
-    devtool: isDevelopment ? 'eval-source-map' : 'source-map',
+    devtool: isDevelopment ? 'eval-source-map' : 'none',
     context,
     mode: isProduction ? 'production' : 'development',
     optimization: {

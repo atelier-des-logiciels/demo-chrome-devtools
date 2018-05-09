@@ -6,7 +6,6 @@ import render from './render';
 import { withIds } from './utils';
 
 const setTodos = todos => () => ({ todos: withIds(todos) })
-
 class TodoApp extends React.Component {
   constructor(props) {
     super(props);

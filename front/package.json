@@ -6,7 +6,7 @@
     "dev": "NODE_ENV=development webpack-dev-server --host 0.0.0.0",
     "clean": "rimraf dist",
     "build:dev": "npm run clean && webpack --progress",
-    "build": "npm run clean && NODE_ENV=production webpack --progress",
+    "build:prod": "npm run clean && NODE_ENV=production webpack --progress",
     "test:e2e": "node e2e",
     "test:jscoverage": "npm run build:dev && npm run test:e2e -- --build=false && rimraf coverage && nyc report --reporter=html && opn coverage/index.html",
     "lint": "eslint ."

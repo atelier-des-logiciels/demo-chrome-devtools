@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node .",
+    "start": "TODO_STATIC_PATH=static node .",
     "dev": "nodemon --inspect src/.",
     "clean": "rimraf dist",
-    "build": "npm run clean && cpy package.json dist && cpy --cwd=src '*.js' ../dist --parents && cpy 'data/*.json' dist --parents"
+    "build:prod": "npm run clean && cpy package.json dist && cpy --cwd=src '*.js' ../dist --parents && cpy 'data/*.json' dist --parents"
   },
   "author": "",
   "license": "ISC",
