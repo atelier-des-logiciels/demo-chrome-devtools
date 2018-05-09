@@ -28,7 +28,7 @@ class App extends React.Component {
     return (
       <div className={classes.root}>
         <Title>
-        TODO Assistant
+          Alfred
           <Button
             id="todolist-reload"
             onClick={() => this.forceUpdate()}
