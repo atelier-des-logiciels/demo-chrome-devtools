@@ -16,6 +16,7 @@
     "build:front": "(cd front && npm run build:prod) && mkdir -p dist/static && cp -R front/dist/* dist/static",
     "build:server": "(cd server && npm run build:prod) && cp -R server/dist/* dist",
     "build": "npm run clean && mkdir dist && npm run build:front && npm run build:server",
+    "installDeps": "npm i --prefer-offline && (cd front && npm i --prefer-offline) && (cd server && npm i --prefer-offline)",
     "ci": "npm run build && (cd front && npm run test:e2e -- --build=false) && npm run deploy",
     "deploy": "cd dist && now --public",
     "start": "cd dist && npm i --production --prefer-offline && npm run start",
