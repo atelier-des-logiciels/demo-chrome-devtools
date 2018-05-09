@@ -4,7 +4,7 @@ const Router = require('koa-router');
 const serve = require('koa-static');
 
 const createRouter = (dataPath) => {
-  const todoList = require(path.join(process.cwd(), dataPath, 'todolist.json'));
+  const todoList = require(path.join(path.resolve(dataPath), 'todolist.json'));
 
   const router = new Router({
     prefix: '/api'

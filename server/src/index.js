@@ -1,8 +1,10 @@
+const path = require('path');
+
 const createServer = require('./server');
 
-const staticPath = process.env.TODO_STATIC_PATH || '../front/dist';
-const dataPath = process.env.TODO_DATA_PATH || './data';
-const port = process.env.TODO_PORT || 3000;
+const staticPath = process.env.ALFRED_STATIC_PATH || path.join(__dirname, '../../front/dist');
+const dataPath = process.env.ALFRED_DATA_PATH || path.join(__dirname, '../data');
+const port = process.env.ALFRED_PORT || 3000;
 
 createServer({
   staticPath,

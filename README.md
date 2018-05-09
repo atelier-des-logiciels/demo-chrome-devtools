@@ -11,28 +11,45 @@ This app intends to show you how you can use chrome devtools to write efficient 
 ```bash
 $ git clone https://github.com/atelier-des-logiciels/demo-chrome-devtools.git
 $ cd demo-chrome-devtools
-$ npm install
+$ npm run installDeps
 ```
 
-- Run tests :
+### Run End-to-end tests :
 ```bash
-$ npm run test:all
+$ npm run test:e2e
 ```
 
-- Build the app :
+### Build the app :
 ```bash
 $ npm run build
 ```
 
-- Start server (port 3000) :
+### Start app (port 3000) :
 ```bash
 $ npm run start
 ```
 
-### Development
-To use `webpack-dev-server` :
+### Run CI process:
+
+It does following steps:
+  - Build front and server in `dist` folder
+  - Run end-to-end tests
+  - Deploy app
+
 ```bash
-npm run dev
+$ npm run ci
+```
+
+### Development
+
+Start server (for API):
+```bash
+cd server && npm run dev
+```
+
+Start front :
+```bash
+cd front && npm run dev
 ```
 
 ### More todos
@@ -40,11 +57,11 @@ You can re-generate `initialTodolist.json` with more todos.
 
 **e.g.**
 ```bash
-$ ./generate-todos.js 100 > src/initialTodolist.json
+$ ./generate-todos.js 100 > server/data/todolist.json
 ```
 
 ## Render optimizations
-There are 2 importants render optimization using `shouldComponentUpdate`
+There are 2 important render optimizations using `shouldComponentUpdate`
 - in [TodoList component](https://github.com/atelier-des-logiciels/demo-chrome-devtools/blob/master/src/App/TodoApp/TodoList/index.js#L16)
 - in [Todo component](https://github.com/atelier-des-logiciels/demo-chrome-devtools/blob/master/src/App/TodoApp/Todo/index.js#L30)
 
@@ -58,8 +75,12 @@ There are 3 steps for this moment:
   - JS/CSS bundle coverage
   - check that there is no `console.warn` or `console.error`
 
+### e2e tests
+
 #### Run e2e tests
 ```bash
+$ cd front
+$
 $ npm run test:e2e
 # or
 $ node ./e2e
@@ -74,7 +95,7 @@ $ node e2e --delay 500
 #### Speed-up tests
 **Note**: You can speed-up e2e tests by running `npm run build` before and using `--build=false` option
 ```bash
-$ npm run build
+$ npm run build:prod
 $ node e2e --build=false
 ```
 

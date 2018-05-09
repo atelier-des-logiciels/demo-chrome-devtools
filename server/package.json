@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "TODO_STATIC_PATH=static node .",
+    "start": "ALFRED_STATIC_PATH=static ALFRED_DATA_PATH=data node .",
     "dev": "nodemon --inspect src/.",
     "clean": "rimraf dist",
     "build:prod": "npm run clean && cpy package.json dist && cpy --cwd=src '*.js' ../dist --parents && cpy 'data/*.json' dist --parents"

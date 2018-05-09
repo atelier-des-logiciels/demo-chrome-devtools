@@ -41,7 +41,7 @@ const startServer = (config) => (
   serve({
     staticPath: path.join(config.DIST_FOLDER),
     port: config.PORT,
-    dataPath: './e2e'
+    dataPath: __dirname,
   })
 );
 

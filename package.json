@@ -18,6 +18,7 @@
     "build": "npm run clean && mkdir dist && npm run build:front && npm run build:server",
     "installDeps": "npm i --prefer-offline && (cd front && npm i --prefer-offline) && (cd server && npm i --prefer-offline)",
     "ci": "npm run build && (cd front && npm run test:e2e -- --build=false) && npm run deploy",
+    "test:e2e": "cd front && npm run test:e2e",
     "deploy": "cd dist && now --public",
     "start": "cd dist && npm i --production --prefer-offline && npm run start",
     "lint": "eslint ."
