@@ -22,7 +22,7 @@ const hotModuleReplacementPlugin = new webpack.HotModuleReplacementPlugin();
 
 const namedModulesPluginConfig = new webpack.NamedModulesPlugin();
 
-const distFolder = path.join(__dirname, '../dist/front');
+const distFolder = path.join(__dirname, 'dist');
 
 module.exports = {
     devtool: isDevelopment ? 'eval-source-map' : 'source-map',

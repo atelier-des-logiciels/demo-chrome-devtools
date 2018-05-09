@@ -9,7 +9,7 @@ const puppeteer = require('puppeteer');
 const { getCoverageReport } = require('./utils');
 const log = require('./log');
 
-const serve = require('../../server/src');
+const serve = require('../../server/src/server');
 
 
 /* ************************************************************************* */
@@ -38,7 +38,11 @@ const clean = (config) => {
 };
 
 const startServer = (config) => (
-  serve(path.join(config.DIST_FOLDER), config.PORT)
+  serve({
+    staticPath: path.join(config.DIST_FOLDER),
+    port: config.PORT,
+    dataPath: './e2e'
+  })
 );
 
 const startBrowser = (config) => puppeteer.launch(config.PUPPETEER_OPTIONS);

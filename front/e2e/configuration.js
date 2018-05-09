@@ -20,7 +20,7 @@ process.env.NODE_ENV='production';
 const webpackConfig = require('../webpack.config');
 
 const tmpFolder = path.resolve(__dirname, 'tmp');
-const distFolder = path.resolve(__dirname, '../..', 'dist', 'front');
+const distFolder = path.resolve(__dirname, '..', 'dist');
 
 const configuration = {
   PUPPETEER_OPTIONS: {

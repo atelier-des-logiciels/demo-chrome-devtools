@@ -2,10 +2,12 @@
   "name": "demo-chrome-devtools-server",
   "version": "1.0.0",
   "description": "",
-  "main": ".eslintrc.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node src/cli.js",
-    "dev": "nodemon src/cli.js"
+    "start": "node .",
+    "dev": "nodemon --inspect src/.",
+    "clean": "rimraf dist",
+    "build": "npm run clean && cpy package.json dist && cpy --cwd=src '*.js' ../dist --parents && cpy 'data/*.json' dist --parents"
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +18,8 @@
     "yargs": "^11.0.0"
   },
   "devDependencies": {
-    "nodemon": "^1.17.4"
+    "cpy-cli": "^1.0.1",
+    "nodemon": "^1.17.4",
+    "rimraf": "^2.6.2"
   }
 }

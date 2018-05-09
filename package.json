@@ -12,7 +12,12 @@
   ],
   "scripts": {
     "commit": "git-cz",
-    "clean": "rimraf ./dist ./e2e/tmp",
+    "clean": "rimraf ./dist && (cd front && npm run clean) && (cd server && npm run clean)",
+    "build:front": "(cd front && npm run build) && mkdir -p dist/static && cp -R front/dist/* dist/static",
+    "build:server": "(cd server && npm run build) && cp -R server/dist/* dist",
+    "build": "npm run clean && mkdir dist && npm run build:front && npm run build:server",
+    "start": "cd dist && npm i --production --prefer-offline && npm run start",
+    "test:e2e": "cd front && npm run test:e2e",
     "lint": "eslint ."
   },
   "repository": {
@@ -28,12 +33,17 @@
   },
   "devDependencies": {
     "babel-eslint": "^8.2.3",
+    "cli-color": "^1.2.0",
     "commitizen": "^2.9.6",
     "cz-conventional-changelog": "^2.1.0",
     "eslint": "^4.19.1",
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-react": "^7.7.0",
-    "rimraf": "^2.6.2"
+    "puppeteer": "^1.3.0",
+    "puppeteer-to-istanbul": "^1.2.2",
+    "ramda": "^0.25.0",
+    "rimraf": "^2.6.2",
+    "webpack": "^4.8.1"
   },
   "config": {
     "commitizen": {

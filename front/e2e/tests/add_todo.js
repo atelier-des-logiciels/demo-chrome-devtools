@@ -1,6 +1,6 @@
 const assert = require('assert').strict;
 
-const initialTodoList = require('../../src/initialTodoList.json');
+const initialTodoList = require('../todolist.json');
 const { getTodoListFromPage } = require('../utils');
 
 const newTodo = { value: 'This is an e2e testing todo task', done: false };

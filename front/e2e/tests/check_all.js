@@ -1,7 +1,7 @@
 const { evolve, not } = require('ramda');
 const assert = require('assert').strict;
 
-const initialTodoList = require('../../src/initialTodoList.json');
+const initialTodoList = require('../todolist.json');
 const { getTodoListFromPage } = require('../utils');
 
 const inverseDone = evolve({ done: not });
