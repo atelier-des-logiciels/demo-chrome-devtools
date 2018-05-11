@@ -139,7 +139,7 @@ const runAudit = async (config) => {
     r => console.log(clc.italic.yellow(r))
   );
 
-  if (lhResults.score <= config.SCORE) {
+  if (lhResults.score < config.SCORE) {
     throw new Error(
       `Actual score is ${Math.floor(lhResults.score)}. Minimum score is ${config.SCORE}`
     );
