@@ -66,14 +66,17 @@ There are 2 important render optimizations using `shouldComponentUpdate`
 - in [Todo component](https://github.com/atelier-des-logiciels/demo-chrome-devtools/blob/master/src/App/TodoApp/Todo/index.js#L30)
 
 ## End-to-end tests
-e2e tests are done using [puppeteer](https://github.com/GoogleChrome/puppeteer).
+e2e tests are done using 
+- [puppeteer](https://github.com/GoogleChrome/puppeteer).
+- [lighthouse](https://github.com/GoogleChrome/lighthouse)
 
 ![e2e testing gif](https://media.giphy.com/media/3j7fkYHql8af0Lm0sD/giphy.gif)
 
-There are 3 steps for this moment:
+There are 4 steps for this moment:
   - functional tests (in `./front/e2e/tests/*`)
   - JS/CSS bundle coverage
   - check that there is no `console.warn` or `console.error`
+  - Compare score returned by lighthouse audit with threshold (default: 20)
 
 ### e2e tests
 
@@ -98,6 +101,27 @@ $ node e2e --delay 500
 $ npm run build:prod
 $ node e2e --build=false
 ```
+
+#### Set audit score threshold
+
+By default, lighthouse score threshold is set to 20, it can be modified using `-t=<VALUE>` option
+```bash
+$ node e2e -s=50
+```
+
+#### disable features
+
+It is possible to disable tests done with puppeteer using `-t=false` option
+```bash
+$ node e2e -t=false
+```
+
+It is possible to disable audit done with lighthouse using `-a=false` option
+```bash
+$ node e2e -a=false
+```
+
+
 
 For more informations, please run `node e2e --help`
 
