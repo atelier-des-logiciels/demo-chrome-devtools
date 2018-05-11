@@ -1,7 +1,7 @@
-const { pipe, toPairs, map } = require('ramda');
+const { pipe, toPairs, map, prop, converge, prepend } = require("ramda");
 
 /* ************************************************************************* */
-const calculateCoverage = (coverage) => {
+const calculateCoverage = coverage => {
   const result = {};
 
   for (const entry of coverage) {
@@ -14,31 +14,38 @@ const calculateCoverage = (coverage) => {
     result[entry.url] = Math.trunc(percentage * 100) / 100;
   }
   return result;
-}
+};
 
 const getCoverageReport = pipe(
   calculateCoverage,
   toPairs,
-  map(([url, percentage]) => (
-    `[${percentage}% covered] ${url}`
-  )),
-)
+  map(([url, percentage]) => `[${percentage}% covered] ${url}`)
+);
 
 /* ************************************************************************* */
 const getTodo = page => async todoElement => {
-  const input = await todoElement.$('input');
-  const divChild = await todoElement.$('div > *');
+  const input = await todoElement.$("input");
+  const divChild = await todoElement.$("div > *");
   const done = await page.evaluate(el => el.checked, input);
   const value = await page.evaluate(el => el.innerText, divChild);
   return { done, value };
-}
+};
 const getTodoListFromPage = async page => {
-  const todolist = await page.$$('#todo');
+  const todolist = await page.$$("#todo");
   return Promise.all(todolist.map(getTodo(page)));
-}
+};
+
+const getAuditResults = converge(prepend, [
+  r => `[${Math.floor(r.score)}] Global score`,
+  pipe(
+    prop("reportCategories"),
+    map(c => `[${Math.floor(c.score)}] Category ${c.name}`)
+  )
+]);
 
 /* ************************************************************************* */
 module.exports = {
   getCoverageReport,
   getTodoListFromPage,
+  getAuditResults
 };
