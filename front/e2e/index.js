@@ -136,7 +136,8 @@ const runAudit = async (config) => {
   );
 
   getAuditResults(lhResults).forEach(
-    r => console.log(clc.italic.yellow(r))
+    (r, i)  => 
+      console.log(`${i != 0 ? '  ' : ''}${clc.italic.yellow(r)}`) 
   );
 
   if (lhResults.score < config.SCORE) {

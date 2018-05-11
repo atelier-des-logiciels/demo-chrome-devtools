@@ -36,10 +36,10 @@ const getTodoListFromPage = async page => {
 };
 
 const getAuditResults = converge(prepend, [
-  r => `[${Math.floor(r.score)}] Global score`,
+  r => `[${Math.floor(r.score)}%] Global score`,
   pipe(
     prop("reportCategories"),
-    map(c => `[${Math.floor(c.score)}] Category ${c.name}`)
+    map(c => `[${Math.floor(c.score)}%] Category ${c.name}`)
   )
 ]);
 
