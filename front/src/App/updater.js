@@ -3,7 +3,7 @@ import {
   assoc, propEq, prepend, evolve,
 } from 'ramda';
 
-import { getNextId, handleMessages } from '../../utils';
+import { getNextId, handleMessages, withIds } from '../utils';
 
 const updateTodo = curry((id, f, list) => (
   map(
@@ -13,7 +13,7 @@ const updateTodo = curry((id, f, list) => (
 ));
 
 const todolistUpdater = handleMessages({
-  SET_TODOLIST: todolist => always(todolist),
+  SET_TODOLIST: todolist => always(withIds(todolist)),
 
   CREATE_TODO: value => !value ? identity : state => {
     const id = getNextId(state);

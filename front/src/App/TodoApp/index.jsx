@@ -1,54 +1,30 @@
-import { curry } from 'ramda';
-import React from 'react'
-import { Divider } from 'material-ui';
+import React from "react";
+import { Divider } from "material-ui";
 
-import updater from './updater';
+import Context from "../context";
+import TodoCreator from "./TodoCreator";
+import TodoList from "./TodoList";
 
-import TodoCreator from './TodoCreator';
-import TodoList from './TodoList';
-
-class TodoApp extends React.Component {
-
-  state = {
-    todolist: [],
-    newTodoValue: '',
-  }
-
-  static propTypes = {
-    initialTodolist: TodoList.propTypes.data,
-  }
-
-  static defaultProps = {
-    initialTodolist: [],
-  }
-
-  update = curry((msg, payload) => {
-    this.setState(updater(msg, payload));
-  });
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    return updater('SET_TODOLIST', nextProps.initialTodolist)(prevState);
-  }
-
-  render() {
-    return (
+const TodoApp = () => (
+  <Context.Consumer>
+    {({ newTodoValue, todolist, update }) => (
       <React.Fragment>
         <TodoCreator
-          value={this.state.newTodoValue}
-          onChange={this.update('SET_NEWTODO_VALUE')}
-          onCreate={this.update('CREATE_TODO')}
+          value={newTodoValue}
+          onChange={update("SET_NEWTODO_VALUE")}
+          onCreate={update("CREATE_TODO")}
         />
         <Divider />
         <TodoList
-          data={this.state.todolist}
-          onRemove={this.update('REMOVE_TODO')}
-          onToggleEdit={this.update('TOGGLE_EDIT_TODO')}
-          onChange={this.update('CHANGE_TODO')}
-          onCheckboxClick={this.update('TOGGLE_TODO_STATE')}
+          data={todolist}
+          onRemove={update("REMOVE_TODO")}
+          onToggleEdit={update("TOGGLE_EDIT_TODO")}
+          onChange={update("CHANGE_TODO")}
+          onCheckboxClick={update("TOGGLE_TODO_STATE")}
         />
       </React.Fragment>
-    )
-  }
-}
+    )}
+  </Context.Consumer>
+);
 
-export default (TodoApp);
+export default TodoApp;

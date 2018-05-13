@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { Paper, Button, Icon, Divider } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
+import { curry } from 'ramda';
 
+import Context from './context';
+import updater from './updater';
 import Title from './Title'
 import TodoApp from './TodoApp';
 
@@ -22,37 +25,59 @@ const styles = theme => ({
   },
 });
 
-class App extends React.Component {
+const fetchTodos = () =>
+  fetch(`/api/todos`)
+    .then(r => r.json());
+
+class App extends Component {
+
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+  }
+
+  update = curry((msg, payload) => {
+    this.setState(updater(msg, payload));
+  });
+
+  state = {
+    todolist: [],
+    newTodoValue: '',
+    update: this.update,
+  }
+
+  initTodos() {
+    fetchTodos().then(this.update('SET_TODOLIST'));
+  }
+
+  componentDidMount() {
+    this.initTodos();
+  }
+
   render() {
-    const { classes, initialTodolist } = this.props;
+    const { classes } = this.props;
     return (
-      <div className={classes.root}>
-        <Title>
-          Alfred
-          <Button
-            id="todolist-reload"
-            onClick={() => this.forceUpdate()}
-            variant="fab"
-            color="primary"
-            className={classes.button}
-          >
-            <Icon>replay</Icon>
-          </Button>
-        </Title>
-        <Paper className={classes.paper}>
-          <Divider />
-          <TodoApp initialTodolist={initialTodolist} />
-        </Paper>
-      </div>
+      <Context.Provider value={this.state}>
+        <div className={classes.root}>
+          <Title>
+            Alfred
+            <Button
+              id="todolist-reload"
+              onClick={() => this.initTodos()}
+              variant="fab"
+              color="primary"
+              className={classes.button}
+            >
+              <Icon>replay</Icon>
+            </Button>
+          </Title>
+          <Paper className={classes.paper}>
+            <Divider />
+            <TodoApp />
+          </Paper>
+        </div>
+      </Context.Provider>
     )
   }
-}
-App.propTypes = {
-  classes: PropTypes.object.isRequired,
-  initialTodolist: PropTypes.arrayOf(PropTypes.shape({})),
-}
-App.defaultProps = {
-  initialTodolist: [],
 }
 
 export default withStyles(styles)(App)
