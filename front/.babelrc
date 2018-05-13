@@ -13,5 +13,12 @@
         "browsers": ["last 2 versions"]
       }
     }]
-  ]
+  ],
+  "env": {
+    "development": {
+      "plugins": [
+        "react-hot-loader/babel"
+      ]
+    }
+  }
 }

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Paper, Button, Icon, Divider } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
 import { curry } from 'ramda';
+import { hot } from 'react-hot-loader';
 
 import Context from './context';
 import updater from './updater';
@@ -80,4 +81,4 @@ class App extends Component {
   }
 }
 
-export default withStyles(styles)(App)
+export default hot(module)(withStyles(styles)(App));
