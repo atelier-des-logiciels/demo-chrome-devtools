@@ -104,7 +104,7 @@ $ node e2e --build=false
 
 #### Set audit score threshold
 
-By default, lighthouse score threshold is set to 20, it can be modified using `-t=<VALUE>` option
+By default, lighthouse score threshold is set to 20, it can be modified using `-s=<VALUE>` option
 ```bash
 $ node e2e -s=50
 ```
