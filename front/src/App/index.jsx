@@ -26,8 +26,8 @@ const styles = theme => ({
   },
 });
 
-const fetchTodos = () =>
-  fetch(`/api/todos`)
+const fetchTodos = (filter) =>
+  fetch(`/api/todos?filter=${filter}`)
     .then(r => r.json());
 
 class App extends Component {
@@ -43,15 +43,22 @@ class App extends Component {
   state = {
     todolist: [],
     newTodoValue: '',
+    filter: 'all',
     update: this.update,
   }
 
   initTodos() {
-    fetchTodos().then(this.update('SET_TODOLIST'));
+    fetchTodos(this.state.filter).then(this.update('SET_TODOLIST'));
   }
 
   componentDidMount() {
     this.initTodos();
+  }
+
+  componentDidUpdate(nextProps, prevState) {
+    if (prevState.filter != this.state.filter) {
+      this.initTodos();
+    }
   }
 
   render() {

@@ -40,7 +40,12 @@ const newTodoValueUpdater = handleMessages({
   SET_NEWTODO_VALUE: payload => always(payload),
 });
 
+const filterUpdater = handleMessages({
+  SET_TODO_FILTER: payload => always(payload),
+});
+
 export default (msg, payload) => evolve({
   todolist: todolistUpdater(msg, payload),
   newTodoValue: newTodoValueUpdater(msg, payload),
+  filter: filterUpdater(msg, payload),
 });
