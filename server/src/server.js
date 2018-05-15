@@ -14,11 +14,15 @@ const createRouter = (dataPath) => {
     ctx.set('Access-Control-Allow-Origin', '*');
     ctx.type= 'JSON';
 
-    if (ctx.query.filter !== 'all') {
-      throw new Error('filter not supported');
+    let todos = todoList;
+
+    if (ctx.query.filter === 'active') {
+      todos = todoList.filter(t => !t.done);
+    } else if (ctx.query.filter === 'completed') {
+      todos = todoList.filter(t => t.done);
     }
 
-    ctx.body = JSON.stringify(todoList, null, 2);
+    ctx.body = JSON.stringify(todos, null, 2);
   });
 
   return router;
