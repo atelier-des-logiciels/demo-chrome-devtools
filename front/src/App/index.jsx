@@ -48,7 +48,7 @@ class App extends Component {
   }
 
   async initTodos() {
-    this.update('SET_TODOLIST', await fetchTodos());
+    this.update('SET_TODOLIST', await fetchTodos(this.state.filter));
   }
 
   componentDidMount() {
