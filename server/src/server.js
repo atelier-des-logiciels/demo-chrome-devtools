@@ -12,8 +12,13 @@ const createRouter = (dataPath) => {
 
   router.get('/todos', (ctx) => {
     ctx.set('Access-Control-Allow-Origin', '*');
-    ctx.body = JSON.stringify(todoList, null, 2);
     ctx.type= 'JSON';
+
+    if (ctx.query.filter !== 'all') {
+      throw new Error('filter not supported');
+    }
+
+    ctx.body = JSON.stringify(todoList, null, 2);
   });
 
   return router;
