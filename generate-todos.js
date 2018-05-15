@@ -16,9 +16,12 @@ const n = argv._[0] || 1;
 
 const boolRand = () => Boolean(_.random(0, 1));
 
+const dateRand = () => Date.now() + _.random(-10000, 10000, false)
+
 const createTodo = () => ({
   done: boolRand(),
   value: lorem(),
+  date: dateRand(),
 });
 
 const todos = _.times(n, createTodo);
