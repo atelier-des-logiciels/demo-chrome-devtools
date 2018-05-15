@@ -31,7 +31,7 @@ const getTodo = page => async todoElement => {
   return { done, value };
 };
 const getTodoListFromPage = async page => {
-  const todolist = await page.$$("#todo");
+  const todolist = await page.$$(".todo");
   return Promise.all(todolist.map(getTodo(page)));
 };
 

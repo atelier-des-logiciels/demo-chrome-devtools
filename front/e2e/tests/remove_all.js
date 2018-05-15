@@ -5,7 +5,7 @@ const { getTodoListFromPage } = require('../utils');
 
 module.exports = async ({ page }) => {
   // remove all todos
-  for (const elem of await page.$$('#todo-remove')) {
+  for (const elem of await page.$$('.todo-remove')) {
     await elem.click()
   }
   const cleanedTodolist = await getTodoListFromPage(page);
@@ -14,7 +14,7 @@ module.exports = async ({ page }) => {
   // reload todos
   const reloadButtonElement = await page.$('#todolist-reload');
   await reloadButtonElement.click();
-  await page.waitForSelector('#todo');
+  await page.waitForSelector('.todo');
 
   const todolist = await getTodoListFromPage(page);
   assert.deepEqual(todolist, initialTodoList, 'All todos should be removed');

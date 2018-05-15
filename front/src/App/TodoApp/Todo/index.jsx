@@ -92,7 +92,7 @@ class Todo extends React.Component {
         }}
       >
         <TextField fullWidth
-          id="todo-input"
+          className="todo-input"
           style={{ paddingLeft: '16px', width: '95%' }}
           inputRef={node => { this.textfield = node; }}
           onChange={this.onChange}
@@ -117,7 +117,7 @@ class Todo extends React.Component {
     }
     return (
       <IconButton
-        id="todo-edit"
+        className="todo-edit"
         disableRipple
         color="primary"
         component="span"
@@ -131,7 +131,7 @@ class Todo extends React.Component {
   renderRemoveIcon = () => {
     return (
       <IconButton
-        id="todo-remove"
+        className="todo-remove"
         disableRipple
         color="secondary"
         component="span"
@@ -145,7 +145,7 @@ class Todo extends React.Component {
 
   render() {
     return (
-      <ListItem id='todo'>
+      <ListItem className='todo'>
         <Checkbox
           onClick={this.onCheckboxClick}
           checked={this.props.done}

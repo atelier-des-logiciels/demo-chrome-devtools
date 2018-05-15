@@ -11,11 +11,11 @@ const expectedTodolist = initialTodoList.map(({ done }) => ({
 }))
 
 module.exports = async ({ page }) => {
-  for (const elem of await page.$$('#todo-edit')) {
+  for (const elem of await page.$$('.todo-edit')) {
     await elem.click()
   }
 
-  for (const elem of await page.$$('#todo-input')) {
+  for (const elem of await page.$$('.todo-input')) {
     await elem.click({ clickCount: 3 })
     await elem.type(addedText);
     await elem.press('Enter');

@@ -9,7 +9,7 @@ const inverseDone = evolve({ done: not });
 const expectedTodolist = initialTodoList.map(inverseDone);
 
 module.exports = async ({ page }) => {
-  const todoElements = await page.$$('#todo');
+  const todoElements = await page.$$('.todo');
   for (const todoElem of todoElements) {
     const input = await todoElem.$('input');
     await input.click()
