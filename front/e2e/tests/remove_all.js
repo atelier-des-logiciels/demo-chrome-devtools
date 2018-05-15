@@ -14,6 +14,8 @@ module.exports = async ({ page }) => {
   // reload todos
   const reloadButtonElement = await page.$('#todolist-reload');
   await reloadButtonElement.click();
+  await page.waitForSelector('#todo');
+
   const todolist = await getTodoListFromPage(page);
   assert.deepEqual(todolist, initialTodoList, 'All todos should be removed');
 

@@ -43,13 +43,15 @@ const startServer = config =>
 
 const startBrowser = config => puppeteer.launch(config.PUPPETEER_OPTIONS);
 
-const launchChromeAndRunLighthouse = (url, flags, config = null) =>
-  chromeLauncher.launch().then(chrome => {
-    flags.port = chrome.port;
-    return lighthouse(url, flags, config).then(results =>
-      chrome.kill().then(() => results)
-    );
-  });
+const launchChromeAndRunLighthouse = async (url, flags, config = null) => {
+  const chrome = await chromeLauncher.launch({
+    chromeFlags: ['--headless'],
+  })
+  flags.port = chrome.port;
+  const results = await lighthouse(url, flags, config);
+  await chrome.kill();
+  return results;
+}
 
 const execTests = async ({ tests, config, browser, page }) => {
   const consoleMessages = [];

@@ -37,6 +37,7 @@ const configuration = {
   PUPPETEER_OPTIONS: {
     headless: argv.delay === false,
     slowMo: argv.delay,
+    devtools: true,
   },
   HOST: 'http://localhost',
   PORT: 4242,
