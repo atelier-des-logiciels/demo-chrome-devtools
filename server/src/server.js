@@ -25,6 +25,7 @@ const createRouter = (dataPath) => {
     const list = R.pipe(
       R.filter(getFilter(ctx.query.filter)),
       R.sortBy(R.prop('date')),
+      R.reverse,
       R.map(R.evolve({
         date: d => new Date(d),
         value: R.replace(/^./, R.toLower)
