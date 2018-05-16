@@ -27,7 +27,7 @@ const createRouter = (dataPath) => {
       R.sortBy(R.prop('date')),
       R.map(R.evolve({
         date: d => new Date(d),
-        value: R.replace(/^./, R.toUpper)
+        value: R.replace(/^./, R.toLower)
       })),
       R.take(20),
     )(todoList);
