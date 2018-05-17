@@ -28,7 +28,8 @@ const styles = theme => ({
 
 const fetchTodos = (filter) =>
   fetch(`/api/todos?filter=${filter}`)
-    .then(r => r.json());
+    .then(r => r.json())
+    .then(arr => arr.slice(0, 20));
 
 class App extends Component {
 

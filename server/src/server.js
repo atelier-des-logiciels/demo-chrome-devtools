@@ -30,7 +30,6 @@ const createRouter = (dataPath) => {
         date: d => new Date(d),
         value: R.replace(/^./, R.toLower)
       })),
-      R.take(20),
     )(todoList);
 
     const dur = Date.now() - timeStart;
